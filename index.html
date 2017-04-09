@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>dialog example</title>
+</head>
+<body>
+    <button id="showOpenDialog">showOpenDialog</button>
+    <button id="showSaveDialog">showSaveDialog</button>
+    <button id="showMessageBox">showMessageBox</button>
+    <button id="showErrorBox">showErrorBox</button>
+
+    <script>
+        const {dialog} = require('electron').remote;
+
+        const showOpenDialog = document.querySelector('#showOpenDialog');
+        showOpenDialog.addEventListener('click', () => {
+            dialog.showOpenDialog({
+                filters: [
+                    {name: 'Images', extensions: ['jpg', 'png']}
+                ]
+            });
+        });
+
+        const showSaveDialog = document.querySelector('#showSaveDialog');
+        showSaveDialog.addEventListener('click', () => {
+            dialog.showSaveDialog({
+                title: 'title',
+                buttonLabel: 'button',
+                message: 'message',
+                filters: [
+                    {name: 'Images', extensions: ['jpg', 'png']}
+                ]
+            });
+        });
+
+        const showMessageBox = document.querySelector('#showMessageBox');
+        showMessageBox.addEventListener('click', () => {
+            dialog.showMessageBox({
+                type: 'info',
+                message: 'message',
+                detail: 'detail',
+                buttons: [
+                    'first',
+                    'second',
+                    'third'
+                ],
+                checkboxLabel: 'check',
+                checkboxChecked: false
+            }, (resonse, checkboxChecked) => {
+                console.log(resonse, checkboxChecked);
+            });
+        });
+
+        const showErrorBox = document.querySelector('#showErrorBox');
+        showErrorBox.addEventListener('click', () => {
+            dialog.showErrorBox('title', 'content');
+        });
+    </script>
+</body>
+</html>
